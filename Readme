@@ -1,0 +1,8 @@
+To use:
+All csv files most follow this pattern:
+  At1; At2; ...; Atn; class
+
+If attribute contains decimal, it must use a (,) instead of a (.).
+
+Run the main file, DCT_Main, and it will prompt you for the name of the file you want to load.
+This file must be located in the main folder with the rest of the supplied csv files.

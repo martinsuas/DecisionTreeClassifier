@@ -1,10 +1,8 @@
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Scanner;
 import java.util.HashSet;
 import java.util.Set;
-import java.io.File;
-import java.io.FileReader;
-import java.io.LineNumberReader;
+
 public class DTC_Main {
     public static void main(String args[]) throws Exception {
         System.out.println("Decision Tree Classifier -- Version 1.0");
@@ -20,7 +18,6 @@ public class DTC_Main {
             }
             System.out.println("Please type the name of the testing file:");
             String filename_c = in.nextLine().trim();
-
 
             // DEBUG
             //String filename_t = "bears_train.csv";
@@ -96,19 +93,52 @@ public class DTC_Main {
                      */
                     Gardener gardener = new Gardener(clases.size());
                     DecisionTree dt = new DecisionTree(gardener.growTree(training_data));
+
+                    PrintWriter out_te = new PrintWriter("test_results.txt");
+                    PrintWriter out_tr = new PrintWriter("training_results.txt");
+
+                    // Write training results
                     int total = 0;
                     int correct = 0;
+                    out_tr.println("- Training results -");
+                    for (double[] r : training_data) {
+                        int result = dt.Classify(r);
+                        if (result == (int)r[r.length-1]) {
+                            correct++;
+                            //System.out.println("E:" + result + " C:" + (int)r[r.length-1]);
+                            out_tr.println("E:" + result + " C:" + (int)r[r.length-1]);
+                        } else {
+                            //System.out.println("!! E:" + result + " C:" + (int)r[r.length-1]);
+                            out_tr.println("!! E:" + result + " C:" + (int)r[r.length-1]);
+                        }
+                        total++;
+                    }
+                    System.out.println("- Training results -");
+                    System.out.println("Accuracy: " + ((double)correct/total));
+                    out_tr.println("Accuracy: " + ((double)correct/total));
 
+                    // Write test results
+                    total = 0;
+                    correct = 0;
+                    out_te.println("- Testing results -");
                     for (double[] r : testing_data) {
                         int result = dt.Classify(r);
                         if (result == (int)r[r.length-1]) {
                             correct++;
+                            //System.out.println("E:" + result + " C:" + (int)r[r.length-1]);
+                            out_te.println("E:" + result + " C:" + (int)r[r.length-1]);
+                        } else {
+                            //System.out.println("!! E:" + result + " C:" + (int)r[r.length-1]);
+                            out_te.println("!! E:" + result + " C:" + (int)r[r.length-1]);
                         }
                         total++;
-                        System.out.println("R:" + result + " E:" + (int)r[r.length-1]);
                     }
-
+                    System.out.println("- Training results -");
                     System.out.println("Accuracy: " + ((double)correct/total));
+                    out_te.println("Accuracy: " + ((double)correct/total));
+
+                    out_tr.close();
+                    out_te.close();
                     break;
                 }
             }
