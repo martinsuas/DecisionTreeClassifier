@@ -1,6 +1,6 @@
 # Decision Tree Classifier
 A program that creates a decision tree classifier that predicts, given some training data, 
-the classification of some unlabeled or testing data. 
+the classification of some testing data. 
 ## Running
 Run the main file, DTC_Main, and it will prompt you for the name of the file you want to load.
 This file must be located in the 'data' folder with the rest of the supplied csv files.
